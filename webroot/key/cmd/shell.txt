@@ -1,0 +1,71 @@
+#蓝牙
+svc bluetooth enable
+
+#关蓝牙
+svc bluetooth disable
+
+#vx付款码
+am start -n com.tencent.mm/.plugin.offline.ui.WalletOfflineCoinPurseUI
+
+#zfb付款码
+am start -a android.intent.action.VIEW -d "alipays://platformapi/startapp?appId=20000056"
+
+#手电筒
+echo 0 > /sys/class/leds/led:torch_0/brightness; echo 0 > /sys/class/leds/led:switch_0/brightness; echo 300 > /sys/class/leds/led:torch_0/brightness; echo 1 > /sys/class/leds/led:switch_0/brightness
+
+#关手电筒
+echo 0 > /sys/class/leds/led:torch_0/brightness; echo 0 > /sys/class/leds/led:switch_0/brightness
+
+#录音
+am start --user 0 -n com.coloros.soundrecorder/.TransparentActivity 
+
+#关录音
+am force-stop com.coloros.soundrecorder
+
+#vx扫码
+am start -n com.tencent.mm/.plugin.scanner.ui.BaseScanUI
+
+#zfb扫码
+am start -a android.intent.action.VIEW -d "alipays://platformapi/startapp?appId=10000007"
+
+#nfc
+svc nfc enable
+
+#关nfc
+svc nfc disable
+
+#录屏
+am start --user 0 -n com.oplus.screenrecorder/com.oplus.screenrecorder.MainActivity >/dev/null 2>&1
+
+#关录屏
+am start-service -n com.oplus.screenrecorder/com.oplus.screenrecorder.floatwindow.services.CommandRecorderService --ez recorder_game true --ei recorder_command 3
+
+#录像
+am start --user 0 -n com.oplus.camera/com.oplus.camera.Camera >/dev/null 2>&1; am start --user 0 -n com.oplus.screenrecorder/com.oplus.screenrecorder.MainActivity >/dev/null 2>&1
+
+#关录像
+am start-service -n com.oplus.screenrecorder/com.oplus.screenrecorder.floatwindow.services.CommandRecorderService --ez recorder_game true --ei recorder_command 3; am force-stop com.oplus.camera
+
+#clash
+am start -a com.github.metacubex.clash.meta.action.START_CLASH -n com.github.metacubex.clash.meta/com.github.kr328.clash.ExternalControlActivity  
+
+#关clash
+am force-stop com.github.metacubex.clash.meta
+
+#一键闪记
+am start-foreground-service -p "com.coloros.colordirectservice" --ei "triggerType" 1
+
+#小布随口记
+am start-foreground-service -p "com.coloros.colordirectservice" --ei "triggerType" 1 --ei "longPressEventType" 1
+
+#关小布随口记
+am start-foreground-service -p "com.coloros.colordirectservice" --ei "triggerType" 1 --ei "longPressEventType" 2
+
+#小布识屏
+am start-foreground-service -a oplus.intent.action.DIRECT_SIDEBAR_SERVICE -e extra_entrance_function full_screen_ocr -e triggered_app com.coloros.smartsidebar
+
+#静响切换
+STATE=/sdcard/.mv_state; m=$(settings get system oplus_mode_ringer|tr -cd 0-9); case "$m" in 1|2) cmd media_session volume --stream 3 --get|grep -oE '[0-9]+'|tail -n1 >"$STATE"; cmd media_session volume --stream 3 --set 0; cmd audio set-ringer-mode SILENT ;; 0) cmd audio set-ringer-mode NORMAL; [ -s "$STATE" ] && [ "$(cmd media_session volume --stream 3 --get|grep -oE '[0-9]+'|tail -n1)" = 0 ] && cmd media_session volume --stream 3 --set "$(cat "$STATE")"; rm -f -- "$STATE" ;; esac
+
+#截屏
+service call color_screenshot 1

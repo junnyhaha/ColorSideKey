@@ -1,0 +1,424 @@
+:root {
+    --bg-color: #ffffff;
+    --card-bg-color: #ffffff;
+    --text-color: #1a1f36;
+    --text-secondary: #697386;
+    --text-light: #f8fafc;
+    --primary-color: #1b5e3f;
+    --primary-hover-color: #0f3d2a;
+    --primary-light: #d4e8df;
+    --secondary-color: #2d7a52;
+    --success-color: #1b5e3f;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #06b6d4;
+    --border-color: #e5e7eb;
+    --border-radius: 20px;
+    --shadow-sm: 0 2px 8px rgba(27, 94, 63, 0.08);
+    --shadow: 0 8px 24px rgba(27, 94, 63, 0.12);
+    --shadow-md: 0 16px 40px rgba(27, 94, 63, 0.15);
+    --shadow-lg: 0 24px 56px rgba(27, 94, 63, 0.2);
+    --shadow-xl: 0 32px 72px rgba(27, 94, 63, 0.25);
+    --disabled-color: #cbd5e1;
+    --transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.3);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #1a2744 0%, #2c3e5f 25%, #3d5a7a 50%, #4a6b8f 75%, #5a7fa5 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    color: var(--text-color);
+    -webkit-tap-highlight-color: transparent;
+    min-height: 100vh;
+    height: 100vh;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(58, 96, 143, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+body.modal-open {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+}
+/* 应用布局 */
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+/* 左侧边栏 - 高级磨砂质感 */
+.sidebar {
+    width: 90px;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    padding: 16px 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 8px;
+    flex: 1;
+    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 9px 6px;
+    width: 64px;
+    height: 64px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(145deg, 
+        rgba(203, 213, 225, 0.6) 0%, 
+        rgba(176, 186, 199, 0.6) 50%,
+        rgba(148, 163, 184, 0.6) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: visible;
+    flex-shrink: 0;
+}
+
+/* 悬停动画已移除 */
+
+.tab-item.active {
+    background: linear-gradient(145deg, 
+        rgba(27, 94, 63, 0.85) 0%, 
+        rgba(45, 122, 82, 0.8) 100%);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: scale(1.12);
+    box-shadow: 
+        0 6px 20px rgba(27, 94, 63, 0.6),
+        0 3px 10px rgba(0, 0, 0, 0.35),
+        inset 0 2px 4px rgba(255, 255, 255, 0.35);
+    animation: tabActivate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 标签激活动画 */
+@keyframes tabActivate {
+    0% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1.18) rotate(5deg);
+    }
+    100% {
+        transform: scale(1.12) rotate(0deg);
+    }
+}
+
+
+.tab-text {
+    letter-spacing: 0;
+    line-height: 1.1;
+    margin-top: 0;
+    max-width: 90%;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.tab-item.active .tab-text {
+    transform: translateY(0);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* 右侧内容区域 */
+.content-area {
+    flex: 1;
+    margin-left: 90px;
+    padding: 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 100vh;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+}
+
+.tab-content.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tab-content.hiding {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: collapseToLeft 0.35s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* 二级页面所有元素的动画 */
+.tab-content.active > * {
+    opacity: 0;
+    transform: translateX(-120px);
+}
+
+.tab-content.active > *.slide-in-item {
+    animation: slideInItemBounce 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes slideInItemBounce {
+    0% {
+        opacity: 0;
+        transform: translateX(-120px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateX(15px);
+    }
+    80% {
+        transform: translateX(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes expandFromLeft {
+    from {
+        opacity: 0;
+        filter: blur(8px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes collapseToLeft {
+    from {
+        opacity: 1;
+        filter: blur(0);
+    }
+    to {
+        opacity: 0;
+        filter: blur(8px);
+    }
+}
+
+/* 响应式设计已移除 - 统一样式 */
+.title-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 28px;
+    padding: 28px 36px;
+    box-shadow: 
+        0 8px 32px rgba(99, 102, 241, 0.25),
+        0 16px 48px rgba(236, 72, 153, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -1px 2px rgba(99, 102, 241, 0.1);
+    position: fixed;
+    top: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 800px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    z-index: 1000;
+    margin: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+body.modal-open .title-card {
+    margin-right: var(--scrollbar-width, 0px);
+}
+.title-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(99, 102, 241, 0.08) 0%, 
+        rgba(236, 72, 153, 0.08) 100%);
+    pointer-events: none;
+}
+.title-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 180deg at 50% 50%, 
+        rgba(99, 102, 241, 0.15) 0deg, 
+        rgba(236, 72, 153, 0.15) 120deg, 
+        rgba(6, 182, 212, 0.15) 240deg, 
+        rgba(99, 102, 241, 0.15) 360deg);
+    animation: shimmerRotate 10s linear infinite;
+}
+@keyframes shimmerRotate {
+    0% { transform: rotate(0deg); opacity: 0.6; }
+    50% { opacity: 0.8; }
+    100% { transform: rotate(360deg); opacity: 0.6; }
+}
+h2 {
+    text-align: center;
+    margin: 0;
+    font-size: 52px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #1b5e3f 0%, #2d7a52 50%, #3f9665 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    filter: drop-shadow(0 4px 12px rgba(27, 94, 63, 0.3));
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+    line-height: 1.2;
+    animation: titlePulse 3s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% { filter: drop-shadow(0 4px 12px rgba(27, 94, 63, 0.3)); }
+    50% { filter: drop-shadow(0 4px 20px rgba(45, 122, 82, 0.5)); }
+}
+.pro-badge {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #ffffff;
+    border-radius: 100px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+        0 4px 16px rgba(251, 191, 36, 0.5),
+        0 8px 24px rgba(245, 158, 11, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    animation: badgeBounce 2s ease-in-out infinite;
+}
+
+@keyframes badgeBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-3px) scale(1.05); }
+}
+
+.pro-badge::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4), transparent 70%);
+    animation: proBadgeShine 3s ease-in-out infinite;
+}
+@keyframes proBadgeShine {
+    0% { transform: translate(-100%, -100%) rotate(45deg); }
+    100% { transform: translate(100%, 100%) rotate(45deg); }
+}
+#toast {
+    visibility: hidden;
+    opacity: 0;
+    min-width: 240px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    color: var(--text-color);
+    text-align: center;
+    border-radius: 16px;
+    padding: 16px 28px;
+    position: fixed;
+    z-index: 2000;
+    left: 50%;
+    bottom: 25%;
+    transform: translateX(-50%) translateY(20px) scale(0.9);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 12px 32px rgba(99, 102, 241, 0.25),
+        0 20px 48px rgba(236, 72, 153, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    font-size: 1rem;
+}
+#toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+}

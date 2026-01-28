@@ -1,0 +1,307 @@
+/* 自定义绘制图标样式 - 统一尺寸和居中 - 立体3D效果 */
+.tab-item i {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 图标悬停动画已移除 */
+
+.tab-item.active i {
+    /* 激活状态，图标保持原色不高亮 */
+    color: #f1f5f9 !important;
+    animation: iconPulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 图标脉冲动画 */
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+/* 三段式开关图标 - 立体3D分段矩形 */
+.icon-tristate::before {
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 17px;
+    border: 2px solid currentColor;
+    border-radius: 2.5px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(145deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 100%);
+}
+
+/* 移除激活状态的高亮 */
+/* .tab-item.active .icon-tristate::before {
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        0 2px 8px rgba(255, 255, 255, 0.3);
+} */
+
+/* 中间实心矩形（表示中间档位）- 立体效果 */
+.icon-tristate::after {
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 12px;
+    background: linear-gradient(145deg, 
+        currentColor 0%, 
+        rgba(0, 0, 0, 0.2) 100%);
+    border-radius: 2px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* 移除激活状态的高亮 */
+/* .tab-item.active .icon-tristate::after {
+    background: linear-gradient(145deg, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(255, 255, 255, 0.85) 100%);
+    box-shadow: 
+        0 2px 8px rgba(255, 255, 255, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+} */
+
+/* 快捷键图标 - 立体3D手机侧边按键 */
+/* 手机边框侧面（竖直线条） */
+.icon-shortcut::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 22px;
+    background: linear-gradient(90deg, 
+        currentColor 0%, 
+        rgba(0, 0, 0, 0.3) 100%);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1.5px;
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        inset 1px 0 2px rgba(255, 255, 255, 0.2);
+}
+
+/* 突出的按键（实心窄长方形，紧贴边框）- 立体效果 */
+.icon-shortcut::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 14px;
+    background: linear-gradient(90deg, 
+        currentColor 0%, 
+        rgba(0, 0, 0, 0.2) 100%);
+    border-radius: 3px 0 0 3px;
+    right: calc(50% - 1.5px);
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 
+        -2px 2px 6px rgba(0, 0, 0, 0.3),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* 移除激活状态的高亮 */
+/* .tab-item.active .icon-shortcut::before {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(255, 255, 255, 0.8) 100%);
+    box-shadow: 
+        0 2px 8px rgba(255, 255, 255, 0.3),
+        inset 1px 0 2px rgba(255, 255, 255, 0.4);
+}
+
+.tab-item.active .icon-shortcut::after {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(255, 255, 255, 0.85) 100%);
+    box-shadow: 
+        -2px 2px 8px rgba(255, 255, 255, 0.4),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+} */
+
+/* 音量上图标 - 立体3D向上三角 - 圆角效果 */
+.icon-volume-up::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 14px solid currentColor;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.25)) 
+            drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2))
+            blur(0.3px);
+    border-radius: 1.5px;
+}
+
+.icon-volume-up::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 9px solid rgba(255, 255, 255, 0.3);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -55%);
+    pointer-events: none;
+    filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.4));
+}
+
+/* 音量下图标 - 立体3D向下倒三角 - 圆角效果 */
+.icon-volume-down::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 14px solid currentColor;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.25)) 
+            drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2))
+            blur(0.3px);
+    border-radius: 1.5px;
+}
+
+.icon-volume-down::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 9px solid rgba(255, 255, 255, 0.3);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -45%);
+    pointer-events: none;
+    filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.4));
+}
+
+/* 电源键图标 - 立体3D效果 */
+.icon-power::before {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(0, 0, 0, 0.05) 100%);
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        0 3px 8px rgba(0, 0, 0, 0.25),
+        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+}
+
+.icon-power::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background: linear-gradient(180deg, 
+        currentColor 0%, 
+        rgba(0, 0, 0, 0.3) 100%);
+    border-radius: 1px;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* 移除激活状态的高亮 */
+/* .tab-item.active .icon-power::before {
+    border-color: rgba(255, 255, 255, 1);
+    border-top-color: transparent;
+    box-shadow: 
+        0 3px 10px rgba(255, 255, 255, 0.4),
+        inset 0 1px 3px rgba(255, 255, 255, 0.3);
+}
+
+.tab-item.active .icon-power::after {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(255, 255, 255, 0.85) 100%);
+    box-shadow: 
+        0 2px 8px rgba(255, 255, 255, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+} */
+
+/* 关于图标 - 立体3D效果 */
+.icon-about::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(0, 0, 0, 0.05) 100%);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        0 3px 8px rgba(0, 0, 0, 0.25),
+        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+}
+
+.icon-about::after {
+    content: 'i';
+    font-size: 12px;
+    font-weight: 800;
+    font-style: normal;
+    line-height: 1;
+    color: currentColor;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 移除激活状态的高亮 */
+/* .tab-item.active .icon-about::before {
+    box-shadow: 
+        0 3px 10px rgba(255, 255, 255, 0.4),
+        inset 0 1px 3px rgba(255, 255, 255, 0.3);
+}
+
+.tab-item.active .icon-about::after {
+    text-shadow: 0 2px 6px rgba(255, 255, 255, 0.4);
+} */
+
+/* 响应式设计已移除 - 统一图标样式 */
+

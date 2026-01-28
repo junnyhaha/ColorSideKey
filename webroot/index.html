@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sideKey+</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/feature-cards.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/icons.css">
+</head>
+<body>
+    <div class="app-layout">
+        <nav class="sidebar">
+            <div class="tab-list">
+                <button class="tab-item active" data-tab="tristate">
+                    <i class="icon-tristate"></i>
+                    <span class="tab-text">三段式</span>
+                </button>
+                <button class="tab-item" data-tab="single-key">
+                    <i class="icon-shortcut"></i>
+                    <span class="tab-text">快捷键</span>
+                </button>
+                <button class="tab-item" data-tab="volume-up">
+                    <i class="icon-volume-up"></i>
+                    <span class="tab-text">音量上</span>
+                </button>
+                <button class="tab-item" data-tab="volume-down">
+                    <i class="icon-volume-down"></i>
+                    <span class="tab-text">音量下</span>
+                </button>
+                <button class="tab-item" data-tab="power">
+                    <i class="icon-power"></i>
+                    <span class="tab-text">电源键</span>
+                </button>
+                <button class="tab-item" data-tab="about">
+                    <i class="icon-about"></i>
+                    <span class="tab-text">关于</span>
+                </button>
+            </div>
+        </nav>
+
+        <main class="content-area">
+            <div class="tab-content active" id="tab-tristate">
+                <div class="card" id="tristate-card">
+                    <div class="card-body">
+                        <div class="config-container">
+                            <div class="key-section">
+                                <div class="key-section-title">上拨</div>
+                                <div class="feature-grid" id="up-grid" data-key="up"></div>
+                            </div>
+                            <div class="key-section">
+                                <div class="key-section-title">下拨</div>
+                                <div class="feature-grid" id="down-grid" data-key="down"></div>
+                            </div>
+                            <div class="switch-container">
+                                <span>屏蔽三段键原功能</span><label class="switch"><input type="checkbox" id="shield-toggle"><span class="slider"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-single-key">
+                <div class="card" id="single-key-card">
+                    <div class="card-body">
+                        <div class="config-container">
+                            <div class="key-section">
+                                <div class="key-section-title">双击</div>
+                                <div class="feature-grid" id="dc-grid" data-key="dc"></div>
+                            </div>
+                            <div class="key-section">
+                                <div class="key-section-title">长按</div>
+                                <div class="feature-grid" id="lp-grid" data-key="lp"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-volume-up">
+                <div class="card" id="volume-up-card">
+                    <div class="card-body">
+                        <div class="uncalibrated-notice" data-hw-type="volume" style="display: none; text-align: center;">
+                            <button class="start-calib-btn btn btn-secondary" style="width: 100%;">按键初始化校准</button>
+                        </div>
+                        <div class="calibrated-content" data-hw-type="volume" style="display: none;">
+                            <div class="config-container">
+                                <div class="key-section">
+                                    <div class="key-section-title">双击</div>
+                                    <div class="feature-grid" id="vup_dc-grid" data-key="vup_dc"></div>
+                                </div>
+                                <div class="key-section">
+                                    <div class="key-section-title">长按</div>
+                                    <div class="feature-grid" id="vup_lp-grid" data-key="vup_lp"></div>
+                                </div>
+                            </div>
+                            <div class="main-controls">
+                                <button class="recalib-btn btn btn-secondary">重新校准</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-volume-down">
+                <div class="card" id="volume-down-card">
+                    <div class="card-body">
+                        <div class="uncalibrated-notice" data-hw-type="volume" style="display: none; text-align: center;">
+                            <button class="start-calib-btn btn btn-secondary" style="width: 100%;">按键初始化校准</button>
+                        </div>
+                        <div class="calibrated-content" data-hw-type="volume" style="display: none;">
+                            <div class="config-container">
+                                <div class="key-section">
+                                    <div class="key-section-title">双击</div>
+                                    <div class="feature-grid" id="vdown_dc-grid" data-key="vdown_dc"></div>
+                                </div>
+                                <div class="key-section">
+                                    <div class="key-section-title">长按</div>
+                                    <div class="feature-grid" id="vdown_lp-grid" data-key="vdown_lp"></div>
+                                </div>
+                            </div>
+                            <div class="main-controls">
+                                <button class="recalib-btn btn btn-secondary">重新校准</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-power">
+                <div class="card" id="power-card">
+                    <div class="card-body">
+                        <div class="uncalibrated-notice" data-hw-type="volume" style="display: none; text-align: center;">
+                            <button class="start-calib-btn btn btn-secondary" style="width: 100%;">按键初始化校准</button>
+                        </div>
+                        <div class="calibrated-content" data-hw-type="volume" style="display: none;">
+                            <div class="config-container">
+                                <div class="key-section">
+                                    <div class="key-section-title">双击</div>
+                                    <div class="feature-grid" id="power_dc-grid" data-key="power_dc"></div>
+                                </div>
+                                <div class="key-section">
+                                    <div class="key-section-title">长按</div>
+                                    <div class="feature-grid" id="power_lp-grid" data-key="power_lp"></div>
+                                </div>
+                            </div>
+                            <div class="main-controls">
+                                <button class="recalib-btn btn btn-secondary">重新校准</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-about">
+                <div class="about-hero">
+                    <div class="about-header">
+                        <div class="about-logo">
+                            <div class="logo-circle">
+                                <span class="logo-text">SK+</span>
+                            </div>
+                        </div>
+                        <div class="about-info">
+                            <h2 class="about-title">SideKey+</h2>
+                            <p class="about-subtitle">Modify ColorOS Buttons</p>
+                            <p class="about-author">Version 2.6.0<br>Author：Caelifall © 2025<br>Cracked by Chin</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section-list">
+                    <div class="about-section-card" data-section="features">
+                        <div class="about-section-header">
+                            <span class="about-section-icon">❓</span>
+                            <span class="about-section-title">功能介绍</span>
+                            <span class="about-section-arrow">›</span>
+                        </div>
+                        <div class="about-section-content">
+                            <div class="about-description">
+                                本模块可拓展三段式侧键、快捷侧键、音量键、电源键的双击和长按功能，支持自定义脚本。左侧选择按键类型，点击功能卡片即可配置。音量键和电源键需要初始化校准后才能使用。已解锁<span class="color-demo-gray">灰色</span>卡片的功能。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-section-card" data-section="links">
+                        <div class="about-section-header">
+                            <span class="about-section-icon">🌐</span>
+                            <span class="about-section-title">Link</span>
+                            <span class="about-section-arrow">›</span>
+                        </div>
+                        <div class="about-section-content">
+                            <div class="link-grid">
+                                <div class="link-item" onclick="event.stopPropagation(); window.keyExtenderUI.openLink('http://www.coolapk.com/u/24621888')">
+                                    <span class="link-icon">📗</span>
+                                    <span class="link-label">酷安主页</span>
+                                </div>
+                                <div class="link-item" onclick="event.stopPropagation(); window.keyExtenderUI.openLink('https://v.douyin.com/6H1X2sGKJsY/')">
+                                    <span class="link-icon">🎬</span>
+                                    <span class="link-label">抖音主页</span>
+                                </div>
+                                <div class="link-item" onclick="event.stopPropagation(); window.keyExtenderUI.openLink('https://github.com/junnyhaha/ColorSideKey')">
+                                    <span class="link-icon">🧩</span>
+                                    <span class="link-label">Update</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    <div id="toast"></div>
+
+    <div id="calibration-modal" class="modal-overlay">
+        <div class="modal-content calibration-modal-content">
+            <button id="calib-cancel-btn" class="modal-close-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="calibration-header">
+                <div class="calibration-icon">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 6v6l4 2"></path>
+                    </svg>
+                </div>
+                <h2 class="calibration-title">按键校准向导</h2>
+                <p class="calibration-subtitle">请根据提示依次按下对应按键</p>
+            </div>
+
+            <div class="calibration-instruction">
+                <div class="instruction-icon">👆</div>
+                <p id="calib-instruction">Ready to start...</p>
+            </div>
+
+            <div class="calibration-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="calib-progress"></div>
+                </div>
+                <div class="progress-label">
+                    <span id="calib-current">0</span> / <span id="calib-total">3</span>
+                </div>
+            </div>
+
+            <div class="calibration-steps">
+                <div class="calib-step" id="calib-vup" data-status="pending">
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 19V5M5 12l7-7 7 7"></path>
+                        </svg>
+                    </div>
+                    <div class="step-content">
+                        <h4 class="step-title">Vol UP</h4>
+                        <p class="step-description">Click the Vol UP Button</p>
+                    </div>
+                    <div class="step-status">
+                        <span class="status-badge">Readying</span>
+                    </div>
+                </div>
+
+                <div class="calib-step" id="calib-vdown" data-status="pending">
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M19 12l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="step-content">
+                        <h4 class="step-title">Vol DOWN</h4>
+                        <p class="step-description">Click the Vol DOWN Button</p>
+                    </div>
+                    <div class="step-status">
+                        <span class="status-badge">Readying</span>
+                    </div>
+                </div>
+
+                <div class="calib-step" id="calib-power" data-status="pending">
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                            <line x1="12" y1="2" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="step-content">
+                        <h4 class="step-title">Power Button</h4>
+                        <p class="step-description">Click the POWER Button</p>
+                    </div>
+                    <div class="step-status">
+                        <span class="status-badge">Readying</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editor-modal" class="modal-overlay">
+        <div class="modal-content editor-modal-content">
+            <div class="editor-header">
+                <h2 id="editor-title" class="editor-title">代码编辑器</h2>
+                <div id="editor-tabs" class="editor-tabs"></div>
+                <button id="editor-close-btn" class="modal-close-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="editor-workspace">
+                <div id="editor-container" class="code-editor">
+                    <div id="line-numbers" class="line-numbers"></div>
+                    <textarea id="editor-textarea" class="code-textarea" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+                </div>
+            </div>
+
+            <div class="editor-footer">
+                <div class="editor-stats" style="display:none;">
+                    <span id="editor-lines">行数: 1</span>
+                    <span id="editor-chars">字符: 0</span>
+                </div>
+                <button id="editor-save-btn" class="btn-editor-save">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    保存
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="premium-modal" class="modal-overlay">
+        <div class="modal-content premium-modal-content">
+            <button class="modal-close-btn" onclick="window.keyExtenderUI.cancelVerification()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="premium-hero">
+                <div class="premium-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#premium-gradient)" stroke="currentColor" stroke-width="1.5"/>
+                        <defs>
+                            <linearGradient id="premium-gradient" x1="12" y1="2" x2="12" y2="21">
+                                <stop offset="0%" stop-color="#FFD700"/>
+                                <stop offset="100%" stop-color="#FFA500"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h2 class="premium-title">已解锁全部功能</h2>
+                <p class="premium-subtitle">永久使用包更新</p>
+            </div>
+
+            <div class="premium-features">
+                <div class="premium-feature-item">
+                    <div class="feature-icon">🔓</div>
+                    <div class="feature-content">
+                        <h4>所有灰色功能</h4>
+                        <p>解锁所有<span class="color-demo-gray">灰色卡片</span>功能</p>
+                    </div>
+                </div>
+                <div class="premium-feature-item">
+                    <div class="feature-icon">⚙️</div>
+                    <div class="feature-content">
+                        <h4>音量电源键自定义</h4>
+                        <p>音量键和电源键双击长按自定义</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-process">
+                <h3 class="section-heading">解锁流程</h3>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>支付费用</h4>
+                            <p>点击下方"收款码"查看二维码</p>
+                        </div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>免责说明</h4>
+                            <p>测试代码，请勿传播，请立即删除</p>
+                        </div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>绕过验证</h4>
+                            <p>点击"验证"完成</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="premium-actions">
+                <button id="show-sponsor-code-btn" class="btn-premium btn-gold">
+                    QR code
+                </button>
+                <button id="group-verify-btn" class="btn-premium btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    绕过验证
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="congratulations-modal" class="congratulations-modal">
+        <div class="congratulations-overlay"></div>
+        <div class="congratulations-content">
+            <div class="celebration-effects">
+                <div class="fireworks-container">
+                    <div class="firework" style="left: 15%; animation-delay: 0s;"></div>
+                    <div class="firework" style="left: 45%; animation-delay: 0.3s;"></div>
+                    <div class="firework" style="left: 75%; animation-delay: 0.6s;"></div>
+                    <div class="firework" style="left: 30%; animation-delay: 0.9s;"></div>
+                    <div class="firework" style="left: 60%; animation-delay: 1.2s;"></div>
+                </div>
+                <div class="confetti-container">
+                    <div class="confetti" style="left: 5%; animation-delay: 0s;"></div>
+                    <div class="confetti" style="left: 15%; animation-delay: 0.2s;"></div>
+                    <div class="confetti" style="left: 25%; animation-delay: 0.4s;"></div>
+                    <div class="confetti" style="left: 35%; animation-delay: 0.6s;"></div>
+                    <div class="confetti" style="left: 45%; animation-delay: 0.8s;"></div>
+                    <div class="confetti" style="left: 55%; animation-delay: 1s;"></div>
+                    <div class="confetti" style="left: 65%; animation-delay: 1.2s;"></div>
+                    <div class="confetti" style="left: 75%; animation-delay: 1.4s;"></div>
+                    <div class="confetti" style="left: 85%; animation-delay: 1.6s;"></div>
+                    <div class="confetti" style="left: 95%; animation-delay: 1.8s;"></div>
+                </div>
+                <div class="light-rays">
+                    <div class="ray" style="transform: rotate(0deg);"></div>
+                    <div class="ray" style="transform: rotate(45deg);"></div>
+                    <div class="ray" style="transform: rotate(90deg);"></div>
+                    <div class="ray" style="transform: rotate(135deg);"></div>
+                    <div class="ray" style="transform: rotate(180deg);"></div>
+                    <div class="ray" style="transform: rotate(225deg);"></div>
+                    <div class="ray" style="transform: rotate(270deg);"></div>
+                    <div class="ray" style="transform: rotate(315deg);"></div>
+                </div>
+            </div>
+
+            <div class="congratulations-main">
+                <div class="success-badge">
+                    <div class="badge-ring"></div>
+                    <div class="badge-icon">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <h1 class="congratulations-title">
+                    <span class="title-sparkle">✨</span>
+                    Bypass Succeed
+                    <span class="title-sparkle">✨</span>
+                </h1>
+
+                <div class="congratulations-message">
+                    <div class="message-item">
+                        <div class="message-icon">🎊</div>
+                        <p>恭喜你成功解锁专业版！</p>
+                    </div>
+                    <div class="message-item">
+                        <div class="message-icon">🚀</div>
+                        <p>所有高级功能已为你开启</p>
+                    </div>
+                    <div class="message-item">
+                        <div class="message-icon">💎</div>
+                        <p>感谢你的支持，祝使用愉快</p>
+                    </div>
+                </div>
+
+                <button class="btn-celebration" onclick="window.keyExtenderUI.closeCongratulationsModal()">
+                    <span>Start</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="floating-decorations">
+                <span class="float-emoji" style="left: 10%; top: 15%; animation-delay: 0s;">🎉</span>
+                <span class="float-emoji" style="left: 90%; top: 20%; animation-delay: 0.3s;">⭐</span>
+                <span class="float-emoji" style="left: 15%; top: 80%; animation-delay: 0.6s;">💫</span>
+                <span class="float-emoji" style="left: 85%; top: 75%; animation-delay: 0.9s;">✨</span>
+                <span class="float-emoji" style="left: 50%; top: 10%; animation-delay: 1.2s;">🌟</span>
+                <span class="float-emoji" style="left: 30%; top: 85%; animation-delay: 1.5s;">🎊</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="image-modal" class="modal-overlay">
+        <div id="image-modal-content" class="modal-content">
+            <button id="image-modal-close" class="modal-cancel-btn">&times;</button>
+            <img id="image-modal-img" src="thanks.jpeg" alt="Sponsor Code">
+        </div>
+    </div>
+
+    <div id="coming-soon-modal" class="modal-overlay">
+        <div class="modal-content coming-soon-modal-content">
+           
+            <div class="coming-soon-footer">
+                <p class="footer-tip">Please Support Genuine Product.</p>
+                <button class="btn-coming-soon" id="coming-soon-close-btn">
+                    <span>OK</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/executor.js"></script>
+    <script src="js/logger.js"></script>
+    <script src="js/ui-manager.js"></script>
+    <script src="js/calibration.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
