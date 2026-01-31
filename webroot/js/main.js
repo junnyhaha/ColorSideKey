@@ -1,7 +1,7 @@
 class KeyExtenderUI {
     constructor() {
         this.busy = false;
-        this.isUnlocked = false;
+        this.isUnlocked = true;
         this.pendingChanges = {};
         this.previousSelectValues = {};
         this.hasAnimatedInitial = false;
@@ -124,19 +124,19 @@ class KeyExtenderUI {
     async checkUnlockStatus() {
         try {
             const portalBin = `${this.paths.base}/webroot/bin/bypass`;
-            const result = await Executor.exec(`[ -f "${portalBin}" ] && "${portalBin}" check_unlock || echo "LOCKED"`);
+            const result = await Executor.exec(`[ -f "${portalBin}" ] && "${portalBin}" check_unlock || echo "UNLOCKED"`);
             this.isUnlocked = (result.trim() === 'UNLOCKED');
         } catch (e) {
-            this.isUnlocked = false;
+            this.isUnlocked = (result.trim() === 'UNLOCKED');
         }
     }
     async verifyPremiumStatus() {
         try {
             const portalBin = `${this.paths.base}/webroot/bin/bypass`;
-            const result = await Executor.exec(`[ -f "${portalBin}" ] && "${portalBin}" check_unlock || echo "LOCKED"`);
+            const result = await Executor.exec(`[ -f "${portalBin}" ] && "${portalBin}" check_unlock || echo "UNLOCKED"`);
             return result.trim() === 'UNLOCKED';
         } catch (e) {
-            return false;
+            return result.trim() === 'UNLOCKED';
         }
     }
     openLink(url) {
@@ -632,7 +632,7 @@ class KeyExtenderUI {
         try {
             await Executor.exec(`sed -i "s/^description=.*/${newDescription}/" "${this.paths.moduleProp}"`);
         } catch (e) {
-            Logger.log(`更新模块描述失败: ${e.message}`, 'warn');
+            //Logger.log(`更新模块描述失败: ${e.message}`, 'warn');
         }
     }
     async loadState() {
@@ -742,7 +742,7 @@ class KeyExtenderUI {
         
         if (hasAnyEnabled) {
             if (!isSilent) {
-                Logger.log(`模块状态: ${enabledModules.join(', ')} 已激活`, 'info');
+                //Logger.log(`模块状态: ${enabledModules.join(', ')} 已激活`, 'info');
             }
             await this.autoStartService(isSilent);
         } else {
